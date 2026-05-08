@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="BidShop UI Test Suite" parallel="tests" thread-count="1">
+    <listeners>
+        <listener class-name="base.TestListener"/>
+    </listeners>
+
+    <test name="User Account Tests" parallel="methods">
+        <classes>
+            <class name="tests.SignUpTests"/>
+            <class name="tests.SignInTests"/>
+            <class name="tests.EmailValidationTests"/>
+        </classes>
+    </test>
+</suite>

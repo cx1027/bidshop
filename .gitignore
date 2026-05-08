@@ -10,6 +10,9 @@ node_modules/
 # Build outputs
 dist/
 
+# Maven build output
+ui-tests/target/
+
 # Environment files
 .env
 .env.local

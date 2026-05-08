@@ -50,10 +50,10 @@ The following tools are proposed for implementation and execution:
 ## Approach
 The automation suite should prioritize stable end-to-end user flows and core regression coverage rather than exhaustive UI checks. Tests should target business-critical paths, use reliable selectors, and avoid brittle assertions tied to layout or styling.
 
-A layered structure is recommended:
-- Smoke tests for the most critical flows.
-- Regression tests for core user journeys within scoped modules.
-- Reusable page objects, helpers, or fixtures to reduce duplication.
+## Code Reusable Structure:
+- Create a Features.md for the generated test cases list.
+- Review the Features.md to find the code can be reused. eg. Login
+- Update the Features.md when the test scripts passed.
 
 ## Test Data and Environment
 - Use dedicated test accounts and stable seed data where possible.
