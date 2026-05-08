@@ -17,6 +17,7 @@ public class SearchAndFilterPage extends BasePage {
     private final By filterCategory = By.cssSelector("[data-testid='filter-category']");
     private final By filterSummary = By.cssSelector("[data-testid='filter-summary']");
     private final By emptyState = By.cssSelector("[data-testid='empty-state']");
+    private final By emptyStateMessage = By.xpath("//*[contains(text(), 'No products match your filters.')]");
 
     public SearchAndFilterPage(WebDriver driver) {
         super(driver);
@@ -41,6 +42,7 @@ public class SearchAndFilterPage extends BasePage {
         WebElement searchInput = findElement(filterSearch);
         searchInput.clear();
         searchInput.sendKeys(keyword);
+        verifyAllDescriptionsEqual(keyword);
     }
 
     public String getFilterSummaryText() {
@@ -65,6 +67,11 @@ public class SearchAndFilterPage extends BasePage {
         return el != null ? el.getText().trim() : "";
     }
 
+    public String getProductDescription(WebElement card) {
+        WebElement el = card.findElement(By.cssSelector("[data-testid^='product-description-']"));
+        return el != null ? el.getText().trim() : "";
+    }
+
     public List<String> getDisplayedProductNames() {
         return getProductCards().stream()
                 .map(this::getProductName)
@@ -75,6 +82,33 @@ public class SearchAndFilterPage extends BasePage {
         return getProductCards().stream()
                 .map(this::getProductCategory)
                 .toList();
+    }
+
+    public List<String> getDisplayedProductDescriptions() {
+        return getProductCards().stream()
+                .map(this::getProductDescription)
+                .toList();
+    }
+
+    public void verifyAllDescriptionsEqual(String expectedDescription) {
+        List<String> descriptions = getDisplayedProductDescriptions();
+        for (String description : descriptions) {
+            Assert.assertTrue(description.contains(expectedDescription),
+                    "Product description '" + description + "' does not contain expected description '" + expectedDescription + "'");
+        }
+    }
+
+    public void verifyNoProductsMessageVisible() {
+        Assert.assertTrue(isElementVisible(emptyStateMessage),
+                "No products message should be visible when no products match the filters");
+    }
+
+    public void verifyAllCategoriesEqual(String expectedCategory) {
+        List<String> categories = getDisplayedProductCategories();
+        for (String category : categories) {
+            Assert.assertEquals(category, expectedCategory,
+                    "Product category '" + category + "' does not match expected category '" + expectedCategory + "'");
+        }
     }
 
     public void clearSearch() {
@@ -88,11 +122,4 @@ public class SearchAndFilterPage extends BasePage {
         select.selectByIndex(0);
     }
 
-    public void verifyAllCategoriesEqual(String expectedCategory) {
-        List<String> categories = getDisplayedProductCategories();
-        for (String category : categories) {
-            Assert.assertEquals(category, expectedCategory,
-                    "Product category '" + category + "' does not match expected category '" + expectedCategory + "'");
-        }
-    }
 }

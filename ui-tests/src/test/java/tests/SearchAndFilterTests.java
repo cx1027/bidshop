@@ -41,20 +41,12 @@ public class SearchAndFilterTests extends BaseTest {
         page.open();
 
         page.searchByKeyword("Full Cream Milk");
-        Assert.assertTrue(page.isProductGridVisible(),
-                "Product grid should be visible after keyword search");
-        Assert.assertTrue(page.getDisplayedProductNames().stream()
-                        .anyMatch(name -> name.toLowerCase().contains("milk")),
-                "Search results should contain 'milk' products for keyword 'Full Cream Milk'");
+        page.verifyAllDescriptionsEqual("milk");
 
         page.clearSearch();
 
         page.searchByKeyword("bread");
-        Assert.assertTrue(page.isProductGridVisible(),
-                "Product grid should be visible after keyword search");
-        Assert.assertTrue(page.getDisplayedProductNames().stream()
-                        .anyMatch(name -> name.toLowerCase().contains("bread")),
-                "Search results should contain 'bread' products for keyword 'bread'");
+        page.verifyAllDescriptionsEqual("bread");
     }
 
     @Test(description = "SF-003 — Verify that search and category filtering work together (category:frozen+keyword:Cream, category:frozen+keyword:meat)")
@@ -64,25 +56,16 @@ public class SearchAndFilterTests extends BaseTest {
 
         page.selectCategory("Frozen");
         page.searchByKeyword("Cream");
-
-        Assert.assertTrue(page.isProductGridVisible(),
-                "Product grid should be visible after combined search and filter");
-        if (!page.getProductCards().isEmpty()) {
-            Assert.assertTrue(page.getDisplayedProductCategories().stream()
-                    .allMatch(cat -> cat.equalsIgnoreCase("Frozen")),
-                    "All displayed products should belong to 'Frozen' category");
-        }
+ 
+        page.verifyAllCategoriesEqual("Frozen");
+        page.verifyAllDescriptionsEqual("bread");
 
         page.clearSearch();
+        page.selectCategory("All categories");
 
+        page.selectCategory("Frozen");
         page.searchByKeyword("meat");
-        Assert.assertTrue(page.isProductGridVisible(),
-                "Product grid should be visible after updating search keyword");
-        if (!page.getProductCards().isEmpty()) {
-            Assert.assertTrue(page.getDisplayedProductCategories().stream()
-                    .allMatch(cat -> cat.equalsIgnoreCase("Frozen")),
-                    "All displayed products should still belong to 'Frozen' category after keyword update");
-        }
+        page.verifyNoProductsMessageVisible();    
     }
 
     @Test(description = "SF-004 — Verify that searching with no matching results shows empty state (noodles)")
@@ -92,7 +75,6 @@ public class SearchAndFilterTests extends BaseTest {
 
         page.searchByKeyword("noodles");
 
-        Assert.assertTrue(page.isEmptyStateVisible(),
-                "Empty state should be visible when no products match the search keyword 'noodles'");
+        page.verifyNoProductsMessageVisible();
     }
 }
