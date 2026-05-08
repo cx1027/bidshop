@@ -1,0 +1,14 @@
+{
+  "name": "bidshop-playwright-api-tests",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:api": "playwright test",
+    "test:api:headed": "playwright test --headed",
+    "test:api:debug": "playwright test --debug"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.53.0",
+    "typescript": "^5.8.3"
+  }
+}
