@@ -15,10 +15,10 @@ The UI automation suite will focus on the following functional areas:
 - Product information is correct, including title, price, images, variants, and availability.
 
 ### Search and Filtering by Category
-- View by category(eg. Bakery, Dairy, All categories).
-- Keyword search behavior and result display(eg. Full Cream Milk, bread)
-- Search and Filtering by Category together works.(eg. category:frozen+keyword:Cream, category:frozen+keyword:meat)
-- Empty-state and no-result handling.(eg.noodles)
+- View by category(Bakery, Dairy, All categories).
+- Keyword search behavior and result display(Full Cream Milk, bread)
+- Search and Filtering by Category together works.(category:frozen+keyword:Cream, category:frozen+keyword:meat)
+- Empty-state and no-result handling.(noodles)
 
 ### Shopping Cart
 - Add to cart from product 'Shop' page.

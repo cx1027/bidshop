@@ -11,6 +11,7 @@
             <class name="tests.SignInTests"/>
             <class name="tests.EmailValidationTests"/>
             <class name="tests.ProductDiscoveryTests"/>
+            <class name="tests.SearchAndFilterTests"/>
         </classes>
     </test>
 </suite>
