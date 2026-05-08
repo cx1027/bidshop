@@ -1,5 +1,6 @@
 package utils;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,7 +12,22 @@ public class ConfigReader {
     private static String baseUrl;
 
     static {
+        loadEnv();
         loadConfig();
+    }
+
+    private static void loadEnv() {
+        Dotenv dotenv = Dotenv.configure()
+                .directory(".")
+                .ignoreIfMalformed()
+                .ignoreIfMissing()
+                .load();
+        String envBaseUrl = dotenv.get("BASEURL");
+        if (envBaseUrl != null && !envBaseUrl.isBlank()) {
+            baseUrl = envBaseUrl.trim();
+        } else {
+            baseUrl = "http://localhost:5173";
+        }
     }
 
     private static void loadConfig() {
@@ -19,9 +35,8 @@ public class ConfigReader {
                 "src/test/resources/config.properties");
         try (InputStream input = new FileInputStream(configPath)) {
             properties.load(input);
-            baseUrl = properties.getProperty("base.url", "http://localhost:4000");
         } catch (IOException e) {
-            baseUrl = "http://localhost:4000";
+            // Properties file is optional; .env already set the default.
         }
     }
 

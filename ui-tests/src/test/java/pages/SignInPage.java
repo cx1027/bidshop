@@ -1,6 +1,7 @@
 package pages;
 
 import base.BasePage;
+import utils.ConfigReader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -18,7 +19,7 @@ public class SignInPage extends BasePage {
     }
 
     public void open() {
-        driver.get(System.getProperty("base.url", "http://localhost:5173") + "/login");
+        driver.get(ConfigReader.getBaseUrl() + "/login");
         waitForLoginForm();
     }
 
@@ -32,6 +33,7 @@ public class SignInPage extends BasePage {
         type(emailInput, email);
         type(passwordInput, password);
         click(submitButton);
+        waitForUrlContains("/");
     }
 
     public void loginWithoutEmail(String password) {

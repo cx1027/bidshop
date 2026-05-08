@@ -1,6 +1,7 @@
 package pages;
 
 import base.BasePage;
+import utils.ConfigReader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -21,7 +22,7 @@ public class SignUpPage extends BasePage {
     }
 
     public void open() {
-        driver.get(System.getProperty("base.url", "http://localhost:5173") + "/register");
+        driver.get(ConfigReader.getBaseUrl() + "/register");
         waitForRegisterForm();
     }
 

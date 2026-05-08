@@ -10,6 +10,7 @@
             <class name="tests.SignUpTests"/>
             <class name="tests.SignInTests"/>
             <class name="tests.EmailValidationTests"/>
+            <class name="tests.ProductDiscoveryTests"/>
         </classes>
     </test>
 </suite>

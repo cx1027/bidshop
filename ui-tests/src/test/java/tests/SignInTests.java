@@ -6,6 +6,7 @@ import org.testng.annotations.Test;
 import pages.NavBar;
 import pages.SignInPage;
 import pages.SignUpPage;
+import utils.ConfigReader;
 
 public class SignInTests extends BaseTest {
 
@@ -18,7 +19,7 @@ public class SignInTests extends BaseTest {
         signUpPage.open();
         signUpPage.register("Sign In Test User", email, password);
 
-        driver.get(System.getProperty("base.url", "http://localhost:5173") + "/login");
+        driver.get(ConfigReader.getBaseUrl() + "/login");
 
         SignInPage signInPage = new SignInPage(driver);
         Assert.assertTrue(signInPage.isFormVisible(), "Login form should be visible");
@@ -56,7 +57,7 @@ public class SignInTests extends BaseTest {
         signUpPage.open();
         signUpPage.register("Wrong Password Test", email, password);
 
-        driver.get(System.getProperty("base.url", "http://localhost:5173") + "/login");
+        driver.get(ConfigReader.getBaseUrl() + "/login");
 
         SignInPage signInPage = new SignInPage(driver);
         signInPage.login(email, "wrongpassword");

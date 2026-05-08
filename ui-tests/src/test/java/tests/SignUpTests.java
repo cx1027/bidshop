@@ -5,6 +5,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.NavBar;
 import pages.SignUpPage;
+import utils.ConfigReader;
 
 public class SignUpTests extends BaseTest {
 
@@ -17,7 +18,7 @@ public class SignUpTests extends BaseTest {
 
         signUpPage.register("Test User", uniqueEmail, "password123");
 
-        Assert.assertEquals(driver.getCurrentUrl(), "http://localhost:5173/");
+        Assert.assertEquals(driver.getCurrentUrl(), ConfigReader.getBaseUrl() + "/");
 
         NavBar navBar = new NavBar(driver);
         Assert.assertTrue(navBar.isLoggedIn(), "User should be logged in after successful registration");
@@ -29,7 +30,7 @@ public class SignUpTests extends BaseTest {
     public void signUpWithShortPasswordShowsError() {
         String email = "shortpw" + System.currentTimeMillis() + "@example.com";
 
-        driver.get(System.getProperty("base.url", "http://localhost:5173") + "/register");
+        driver.get(ConfigReader.getBaseUrl() + "/register");
 
         SignUpPage signUpPage = new SignUpPage(driver);
         signUpPage.submitForm("Test User", email, "12345");
@@ -47,7 +48,7 @@ public class SignUpTests extends BaseTest {
     public void signUpWithMissingFullnameRemainsOnRegisterPage() {
         String email = "nofullname" + System.currentTimeMillis() + "@example.com";
 
-        driver.get(System.getProperty("base.url", "http://localhost:5173") + "/register");
+        driver.get(ConfigReader.getBaseUrl() + "/register");
 
         SignUpPage signUpPage = new SignUpPage(driver);
         signUpPage.submitForm("", email, "password123");
